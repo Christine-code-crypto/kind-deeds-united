@@ -11,7 +11,7 @@ import { Search } from 'lucide-react';
 
 const CausesPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('all');
   const [sortBy, setSortBy] = useState('');
   
   const categories = [...new Set(causes.map(cause => cause.category))];
@@ -21,7 +21,7 @@ const CausesPage = () => {
                           cause.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           cause.organization.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesCategory = category === '' || cause.category === category;
+    const matchesCategory = category === 'all' || cause.category === category;
     
     return matchesSearch && matchesCategory;
   }).sort((a, b) => {
@@ -71,7 +71,7 @@ const CausesPage = () => {
                   <SelectValue placeholder="Category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Categories</SelectItem>
+                  <SelectItem value="all">All Categories</SelectItem>
                   {categories.map(cat => (
                     <SelectItem key={cat} value={cat}>{cat}</SelectItem>
                   ))}
@@ -109,7 +109,7 @@ const CausesPage = () => {
                 <Button 
                   onClick={() => {
                     setSearchTerm('');
-                    setCategory('');
+                    setCategory('all');
                   }}
                   className="bg-teal-500 hover:bg-teal-600"
                 >
